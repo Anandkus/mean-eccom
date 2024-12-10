@@ -16,6 +16,7 @@ import { PageNotFoundComponent } from './layout/page-not-found/page-not-found.co
   imports: [
     CommonModule,
     SharedRoutingModule
-  ]
+  ],
+  exports:[HeaderComponent,FooterComponent,PageNotFoundComponent]
 })
 export class SharedModule { }

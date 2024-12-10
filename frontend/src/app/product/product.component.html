@@ -1,1 +1,100 @@
-<p>product works!</p>
+<br>
+<div class="row">
+    <div class="col-md-10">
+        <strong>All Proudct List 👤</strong>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-dark float-right" type="button" data-bs-toggle="modal"
+            data-bs-target="#addEditUserModal">Add New Product</button>
+    </div>
+</div>
+<table class=" table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <!-- <th scope="col">Desc</th> -->
+            <th scope="col">Price</th>
+            <th scope="col">Discount Price</th>
+            <th scope="col">Status</th>
+            <th scope="col">Image</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of all_product_data let i=index;">
+            <th>{{i+1}}</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <img src="" alt="" class="img-fluid" width="50px">
+            </td>
+            <td>
+                <div class="btn ">
+                    <button class="btn btn-sm btn-primary " data-bs-toggle="modal"
+                        data-bs-target="#addEditUserModal">Edit</button> &nbsp; &nbsp;
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="addEditUserModal" tabindex="-1" aria-labelledby="addEditUserModal" aria-hidden="true">
+    <div class=" modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEditUserModal"> heading</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <form>
+                                <div class="form-group">
+                                    <label>enter product name</label>
+                                    <input type="text" class="form-control" formControlName="name">
+                                </div>
+                                <div class="form-group">
+                                    <label>product desc</label>
+                                    <textarea class="form-control" formControlName="desc" id=""></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>enter product price</label>
+                                    <input type="text" class="form-control" formControlName="mrp">
+                                </div>
+                                <div class="form-group">
+                                    <label>discount price</label>
+                                    <input type="text" class="form-control" formControlName="dp">
+                                </div>
+                                <div class="form-group  ">
+                                    <label>status </label>
+                                    <select formControlName="status" class="form-select">
+                                        <!-- <option value="">select</option> -->
+                                        <option value="publish">publish</option>
+                                        <option value="draft">draft</option>
+                                        <option value="inactive">inactive</option>
+                                    </select>
+                                </div>
+                                <div class="form-group ">
+                                    <label>upload your photo </label>
+                                    <input type="url" class="form-control" formControlName="uploadphoto">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <div class=" btn-div">
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" >Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

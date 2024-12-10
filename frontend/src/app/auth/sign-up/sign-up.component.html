@@ -1,1 +1,146 @@
-<p>sign-up works!</p>
+<div class="div-box">
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="title-box mt-3 mb-2">
+                    <h3>Registration Form </h3>
+                </div>
+                <form [formGroup]="RegistraionForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-1">
+                                <label class="form-label">First Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" formControlName="fname">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-1">
+                                <label class="form-label">Last Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" formControlName="lname">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-1">
+                                <label class="form-label">Email<span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" formControlName="email">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-1">
+                                <label class="form-label">Password<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" formControlName="password">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-1">
+                                <label class="form-label">Mobile No.<span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" formControlName="mobile">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="mb-1">
+                                <label class="form-label">Age<span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" formControlName="age">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="mb-1">
+                                <label class="form-label">DOB<span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" formControlName="dob">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="mb-1">
+                                <label class="form-label">Address<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" formControlName="address1">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="mb-1">
+                                <label class="form-label">Address 2</label>
+                                <input type="text" class="form-control" formControlName="address2">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mb-1">
+                                <label class="form-label">City<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" formControlName="city">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mb-1">
+                                <label class="form-label">State<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" formControlName="state">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mb-1">
+                                <label class="form-label">Zipcode<span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" formControlName="zipcode">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="mb-1">
+                                <label class="form-label">something about you<span class="text-danger">*</span></label>
+                                <textarea class="form-control" rows="3" formControlName="about"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-1">
+                                <label class="form-label">Upload Your Photo<span class="text-danger">*</span></label>
+                                <input type="file" formControlName="photo" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-1">
+                                <label>what do you want ?<span class="text-danger">*</span> </label>
+                                <select formControlName="role" class="form-select form-control">
+                                    <option value="">select</option>
+                                    <option value="seller">seller</option>
+                                    <option value="buyer">buyer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-1">
+                                <div class="form-group">
+                                    <label>select gender<span class="text-danger">*</span> </label>
+                                    <div class="d-flex gap-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" value="male"
+                                                formControlName="gender">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                male
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" value="female"
+                                                formControlName="gender">
+                                            <label class="form-check-label">
+                                                female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mb-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" formControlName="agreetc">
+                                    <label class="form-check-label">
+                                        terms and conditons<span class="text-danger">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto text-end">
+                        <button type="submit" class="btn btn-primary mb-3" (click)="save()">Submit</button>
+                    </div>
+                </form>
+                <span>you have an account please click here to <a routerLink="/sign-in">login</a></span>
+            </div>
+        </div>
+    </div>
+</div>

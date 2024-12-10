@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./buyer-dashboard.component.scss']
 })
 export class BuyerDashboardComponent {
-
+  all_products=[1,2]
 }

@@ -1,1 +1,31 @@
-<p>sign-in works!</p>
+<div class="div-box">
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="title-box mt-3 mb-2">
+                    <h3>Login Form </h3>
+                </div>
+                <form [formGroup]="loginForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-1">
+                                <label class="form-label">Email<span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" formControlName="email">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-1">
+                                <label class="form-label">Password<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" formControlName="password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto text-end">
+                        <button type="submit" class="btn btn-primary mb-3" (click)="save()">Submit</button>
+                    </div>
+                </form>
+                <span>you don't have an account pls click here to <a routerLink="/sign-up">register</a></span>
+            </div>
+        </div>
+    </div>
+</div>

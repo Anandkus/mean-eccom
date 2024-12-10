@@ -1,1 +1,26 @@
-<p>buyer-dashboard works!</p>
+<br>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a>Buyer</a></li>
+        <li class="breadcrumb-item"><a routerLink="/buyer-dashboard">proudcts</a></li>
+    </ol>
+</nav>
+<div class="row mb-4">
+    <div class="col-sm-4 product" *ngFor="let product of all_products let i=index;">
+        <div class="card mt-1 shadow">
+            <img src="https://picsum.photos/200/300" alt="" class="card-img-top">
+            <div class="card-body">
+                <h4 class="card-title">name </h4>
+                <p><span class="float-left"><strong>MRP</strong>: <del>10</del> </span> &nbsp; <span
+                        class="float-left"><strong>DP</strong>: 56</span></p>
+                <p class="cart-text product-desc">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt molestias perspiciatis odio
+                    tempora enim minima, dignissimos voluptate molestiae provident! Nulla ad reiciendis unde. Temporibus
+                    illo fuga ex aliquid sit ipsam.
+                </p>
+                <button class="btn btn-primary float-start" >Add To Cart</button>
+                <button class="btn btn-warning float-end" >Buy Now</button>
+            </div>
+        </div>
+    </div>
+</div>

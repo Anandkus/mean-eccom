@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-crud.component.scss']
 })
 export class UserCrudComponent {
+all_user_data: any;
 
 }
