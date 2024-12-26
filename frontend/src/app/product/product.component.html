@@ -4,16 +4,15 @@
         <strong>All Proudct List 👤</strong>
     </div>
     <div class="col-md-2">
-        <button class="btn btn-dark float-right" type="button" data-bs-toggle="modal"
-            data-bs-target="#addEditUserModal">Add New Product</button>
+        <button class="btn btn-dark float-right" type="button" data-bs-toggle="modal" data-bs-target="#addEditUserModal"
+            (click)='addNewProduct()'>Add New Product</button>
     </div>
 </div>
-<table class=" table table-hover">
+ <table class=" table table-hover">
     <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <!-- <th scope="col">Desc</th> -->
             <th scope="col">Price</th>
             <th scope="col">Discount Price</th>
             <th scope="col">Status</th>
@@ -24,39 +23,39 @@
     <tbody>
         <tr *ngFor="let item of all_product_data let i=index;">
             <th>{{i+1}}</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{item.productName}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.discountPrice}}</td>
+            <td>{{item.status}}</td>
             <td>
-                <img src="" alt="" class="img-fluid" width="50px">
+                <img src="{{item.productUrl}}" alt="" class="img-fluid" width="50px">
             </td>
             <td>
                 <div class="btn ">
                     <button class="btn btn-sm btn-primary " data-bs-toggle="modal"
-                        data-bs-target="#addEditUserModal">Edit</button> &nbsp; &nbsp;
-                    <button class="btn btn-sm btn-danger">Delete</button>
+                        data-bs-target="#addEditUserModal" (click)="edit(item._id)">Edit</button> &nbsp; &nbsp;
+                    <button class="btn btn-sm btn-danger" (click)="deleteProduct(item._id)">Delete</button>
                 </div>
             </td>
         </tr>
     </tbody>
-</table>
+</table> 
 
 <div class="modal fade" id="addEditUserModal" tabindex="-1" aria-labelledby="addEditUserModal" aria-hidden="true">
     <div class=" modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addEditUserModal"> heading</h5>
+                <h5 class="modal-title" id="addEditUserModal"> {{header_title}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-10 offset-md-1">
-                            <form>
+                            <form [formGroup]="producForm">
                                 <div class="form-group">
                                     <label>enter product name</label>
-                                    <input type="text" class="form-control" formControlName="name">
+                                    <input type="text" class="form-control" formControlName="productName">
                                 </div>
                                 <div class="form-group">
                                     <label>product desc</label>
@@ -64,11 +63,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label>enter product price</label>
-                                    <input type="text" class="form-control" formControlName="mrp">
+                                    <input type="text" class="form-control" formControlName="price">
                                 </div>
                                 <div class="form-group">
                                     <label>discount price</label>
-                                    <input type="text" class="form-control" formControlName="dp">
+                                    <input type="text" class="form-control" formControlName="discountPrice">
                                 </div>
                                 <div class="form-group  ">
                                     <label>status </label>
@@ -80,8 +79,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group ">
-                                    <label>upload your photo </label>
-                                    <input type="url" class="form-control" formControlName="uploadphoto">
+                                    <label>product url </label>
+                                    <input type="url" class="form-control" formControlName="productUrl">
                                 </div>
                             </form>
                         </div>
@@ -91,8 +90,10 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <div class=" btn-div">
-                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
-                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" >Update</button>
+                    <button *ngIf="add_update_check" type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                        (click)="save()" [disabled]="!producForm.valid" >Submit</button>
+                    <button *ngIf="!add_update_check" type="submit" class="btn btn-primary"
+                        data-bs-dismiss="modal" (click)="updateProduct()">Update</button>
                 </div>
             </div>
         </div>

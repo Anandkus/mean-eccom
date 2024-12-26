@@ -1,1 +1,57 @@
-<p>checkout works!</p>
+<br>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/buyer-dashboard">Buyer</a></li>
+        <li class="breadcrumb-item"><a>checkout</a></li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header">
+                Product Detail
+            </div>
+            <div class="card-body product-detail" *ngIf="productData">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{{productData.productUrl}}" alt="" class="img-fluid">
+                    </div>
+                    <div class="col-md-8">
+                        <h4 class="text-bold card-title">
+                            {{productData.productName}}
+                        </h4>
+                        <p class="card-text product-desc">{{productData.desc}}
+                        </p>
+                        <p><span class="float-left"><strong>MRP:</strong><del>{{productData.price}}</del></span>
+                        </p>
+                        <p><span class="float-left"><strong>DP:</strong>{{productData.discountPrice}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Address Detail
+            </div>
+            <div class="card-body" *ngIf="addressData && addressData.address && addressData.address.length > 0">
+                <h5 class="card-title text-bold">{{addressData.fname +" "+addressData.lname}}</h5>
+                <p class="card-text"> {{ addressData.address[0].address1 }} {{ addressData.address[0].address2 }} </p>
+                <p class="card-text">{{ addressData.address[0].city }} {{ addressData.address[0].state }}</p>
+                <p class="card-text">Postal Code: {{ addressData.address[0].zipcode }}</p>
+                <p class="card-text">Contact Number: {{addressData.address[0].mobile}} </p>
+                <a class="btn btn-primary " (click)="order()">Delivery Here</a>
+                <div class="alert alert-info">
+                    <strong>Note:</strong>
+                    we are not giving multiple address addition ,if you want to delivery in different address for now
+                    change
+                    the address in
+                    <span routerLink="/profile" class="text-info sim-pointer">my profile</span> section.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

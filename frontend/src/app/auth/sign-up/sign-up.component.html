@@ -5,7 +5,7 @@
                 <div class="title-box mt-3 mb-2">
                     <h3>Registration Form </h3>
                 </div>
-                <form [formGroup]="RegistraionForm">
+                <form [formGroup]="RegistraionForm" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mb-1">
@@ -88,7 +88,7 @@
                         <div class="col-lg-6">
                             <div class="mb-1">
                                 <label class="form-label">Upload Your Photo<span class="text-danger">*</span></label>
-                                <input type="file" formControlName="photo" class="form-control">
+                                <input type="file" formControlName="photo" class="form-control" (change)="onFileSelected($event)">
                             </div>
                         </div>
                         <div class="col-lg-6">

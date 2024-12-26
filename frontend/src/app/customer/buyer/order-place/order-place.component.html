@@ -1,0 +1,45 @@
+<div class="oreder-place mt-5 ">
+    <div class="row" *ngIf="all_order_data">
+        <div class="col-lg-4" *ngFor="let item of all_order_data let i=index;">
+            <div class="card">
+                <img src="{{item.productId[0].productUrl}}" class="card-img-top" alt="..."
+                    style="height: 100px; width: 100px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.productId[0].productName}}</h5>
+                    <p class="card-text">{{item.productId[0].desc}}</p>
+                    <hr>
+                    <div class="justify-content-between d-flex">
+                        <h6>Status: <strong class="text-muted">{{item.status}}</strong> </h6>
+                        <h6>Order Date: <strong class="text-secondary">{{item.orderDate | date}}</strong> </h6>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar " [ngClass]="backGround(item.status)" role="progressbar"
+                            [style.width]="getProgressWidth(item.status)+'%'  " aria-valuenow="25" aria-valuemin="0"
+                            aria-valuemax="100">{{item.status}}</div>
+                    </div>
+                    <h5><strong>Delivery Here </strong></h5>
+                    <span><strong>{{item.fullname}}</strong></span><br>
+                    <span>{{item.email}} </span>
+                    <span>{{item.contact}}</span><br>
+                    <span>{{item.addressId.address1 }} {{item.addressId.address2?item.addressId.address2:''
+                        }}</span><br>
+                    <span>{{item.addressId.city}} {{item.addressId.state}} {{item.addressId.zipcode}}</span><br>
+                    <span>delivery Date : {{item.deliveryDate| date}}</span>
+                </div>
+                <div class="payment-title  shadow  bg-dark justify-content-between d-flex">
+                    <div>
+                        <h5 class="text-secondary"><strong>Payment Details </strong></h5>
+                        <span class="text-light">Price: <strong><del>1293</del></strong></span><br>
+                        <span class="text-light ">Total Price: <strong>123</strong></span><br>
+                    </div>
+                    <div [hidden]="item.status== 'delivered'  ">
+                        <button class="btn btn-danger" (click)="deleteOrder(item._id )">Cancel Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="title text-center " *ngIf="all_order_data.length==0">
+        <span>No Order Available</span>
+    </div>
+</div>

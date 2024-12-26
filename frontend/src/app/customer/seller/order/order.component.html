@@ -1,0 +1,56 @@
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <strong>All Order List 👤</strong>
+    </div>
+    <div class="col-md-6">
+        <div class="alert alert-info">
+            <strong>Note:</strong> <br>
+            You can update delivery date and status by action button
+        </div>
+    </div>
+</div>
+<form [formGroup]="orderForm">
+    <table class="table table-hover" formArrayName="orders">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Local Address</th>
+                <th scope="col">City</th>
+                <th scope="col">State With Zipcode</th>
+                <th scope="col">Order Date</th>
+                <th>Delivery Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop over the form controls (orders) -->
+            <ng-container *ngFor="let order of orders.controls; let i = index" [formGroupName]="i">
+                <tr>
+                    <td>{{i + 1}}</td>
+                    <td>{{order_data[i]?.fullname}}</td>
+                    <td>{{order_data[i]?.productId[0]?.productName}}</td>
+                    <td>{{order_data[i]?.productId[0]?.discountPrice}}</td>
+                    <td>{{order_data[i]?.addressId?.address1}}</td>
+                    <td>{{order_data[i]?.addressId?.city}}</td>
+                    <td>{{order_data[i]?.addressId?.state}} {{order_data[i]?.addressId?.zipcode}}</td>
+                    <td>{{order_data[i]?.orderDate | date}}</td>
+                    <td><input type="date" class="form-control" formControlName="deliveryDate"></td>
+                    <td>
+                        <select class="form-select" formControlName="status">
+                            <option value="order">order</option>
+                            <option value="pending">pending</option>
+                            <option value="on-the-way">on-the-way</option>
+                            <option value="delivered">delivered</option>
+                        </select>
+                    </td>
+                    <td><button class="btn btn-sm btn-primary" (click)="update(order_data[i]._id,i)">update</button></td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</form>

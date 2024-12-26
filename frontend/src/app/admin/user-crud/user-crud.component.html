@@ -2,10 +2,11 @@
 <div class="row">
     <div class="col-md-10">
         <strong>All Users List 👤</strong>
+        <p class="text-danger">deleter wala chek krna hai user delete krne par address delete ho raha sath he product delete bhi hone chaiye or order delete bhi  </p>
     </div>
     <div class="col-md-2">
-        <button class="btn btn-dark float-right" type="button" data-bs-toggle="modal"
-            data-bs-target="#addEditUserModal">Add New Users</button>
+        <button class="btn btn-dark float-right" type="button" data-bs-toggle="modal" data-bs-target="#addEditUserModal"
+            (click)="addNewUser()">Add New Users</button>
     </div>
 </div>
 <table class=" table table-hover">
@@ -16,25 +17,26 @@
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
             <th scope="col">DOB</th>
-            <th scope="col">City</th>
             <th scope="col">Role</th>
+            <th scope="col">Created</th>
             <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let item of all_user_data let i=index;">
             <td>{{i+1}}</td>
-            <td>{{item.name}}</td>
+            <td>{{item.fname+" "+item.lname}}</td>
             <td>{{item.email}}</td>
-            <td>{{item.mobileNo}}</td>
-            <td>{{item.dob}}</td>
-            <td>{{item.address.city}}</td>
-            <td>{{item.role}}</td>
+            <td>{{item.mobile}}</td>
+            <td>{{item.dob | date:'dd-MM-yyyy'}}</td>
+            <td>{{item.role}} </td>
+            <td>{{item.createdAt | date}}</td>
             <td>
                 <div class="btn ">
-                    <button class="btn btn-sm btn-primary " data-bs-toggle="modal"
-                        data-bs-target="#addEditUserModal">Edit</button> &nbsp; &nbsp;
-                    <button class="btn btn-sm btn-danger">Delete</button>
+                    <button class="btn btn-sm btn-primary " data-bs-toggle="modal" data-bs-target="#addEditUserModal"
+                        (click)="edit(item._id)">Edit</button> &nbsp; &nbsp;
+                    <button class="btn btn-sm btn-danger"
+                        (click)="deleteUser(item._id,item.address[0]._id)">Delete</button>
                 </div>
             </td>
         </tr>
@@ -45,118 +47,153 @@
     <div class=" modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addEditUserModal"> heading</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="addEditUserModal">{{headingTitle}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="addNewUser()"></button>
             </div>
             <div class="modal-body">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-10 offset-md-1">
-                            <form>
-                                <div class="form-group">
-                                    <label>enter your name</label>
-                                    <input type="text" class="form-control" formControlName="name">
-                                </div>
-                                <div class="form-group">
-                                    <label>enter your mobileNo</label>
-                                    <input type="text" class="form-control" formControlName="mobileNo">
-                                </div>
-                                <div class="form-group">
-                                    <label>enter your age </label>
-                                    <input type="text" class="form-control" formControlName="age">
-                                </div>
-                                <div class="form-group">
-                                    <label>enter your DOB </label>
-                                    <input type="date" class="form-control" formControlName="dob">
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label>enter your email </label>
-                                        <input type="email" class="form-control" formControlName="email"
-                                            placeholder="abc@gmail.com">
+                            <form [formGroup]="userRegForm ">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mb-1">
+                                            <label class="form-label">First Name<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" formControlName="fname">
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label>enter password </label>
-                                        <input type="password" class="form-control" formControlName="password"
-                                            placeholder="password">
+                                    <div class="col-lg-12">
+                                        <div class="mb-1">
+                                            <label class="form-label">Last Name<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" formControlName="lname">
+                                        </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <label>enter address </label>
-                                        <input type="text" class="form-control" formControlName="addLine1"
-                                            placeholder="abcd">
+                                    <div class="col-lg-12">
+                                        <div class="mb-1">
+                                            <label class="form-label">Email<span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control" formControlName="email">
+                                        </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <label>enter address 2 </label>
-                                        <input type="text" class="form-control" formControlName="addLine2"
-                                            placeholder="abcd">
+                                    <div class="col-lg-12" *ngIf="addEditbtn">
+                                        <div class="mb-1">
+                                            <label class="form-label">Password<span class="text-danger">*</span></label>
+                                            <input type="password" class="form-control" formControlName="password">
+                                        </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <label>enter city </label>
-                                        <input type="text" class="form-control" formControlName="city"
-                                            placeholder="city..">
+                                    <div class="col-lg-12">
+                                        <div class="mb-1">
+                                            <label class="form-label">Mobile No.<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" formControlName="mobile">
+                                        </div>
                                     </div>
-                                    <div class="form-group  ">
-                                        <label>enter state </label>
-                                        <input type="text" class="form-control" formControlName="state">
+                                    <div class="col-lg-4">
+                                        <div class="mb-1">
+                                            <label class="form-label">Age<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" formControlName="age">
+                                        </div>
                                     </div>
-                                    <div class="form-group  ">
-                                        <label>enter zipcode </label>
-                                        <input type="number" class="form-control" formControlName="zipcode">
+                                    <div class="col-lg-8">
+                                        <div class="mb-1">
+                                            <label class="form-label">DOB<span class="text-danger">*</span></label>
+                                            <input type="date" class="form-control" formControlName="dob">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>select gender </label>
-                                        <div class="d-flex gap-3">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" value="male"
-                                                    formControlName="gender">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    male
-                                                </label>
+                                    <div class="col-lg-12">
+                                        <div class="mb-1">
+                                            <label class="form-label">Address<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" formControlName="address1">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="mb-1">
+                                            <label class="form-label">Address 2</label>
+                                            <input type="text" class="form-control" formControlName="address2">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-1">
+                                            <label class="form-label">City<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" formControlName="city">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-1">
+                                            <label class="form-label">State<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" formControlName="state">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-1">
+                                            <label class="form-label">Zipcode<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" formControlName="zipcode">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="mb-1">
+                                            <label class="form-label">something about you<span
+                                                    class="text-danger">*</span></label>
+                                            <textarea class="form-control" rows="3" formControlName="about"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="mb-1">
+                                            <label class="form-label">Upload Your Photo<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="file" formControlName="photo" class="form-control"
+                                                (change)="onFileSelected($event)">
+                                            <span>{{selectedFile?selectedFile.name:imagePath}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="mb-1">
+                                            <label>what do you want ?<span class="text-danger">*</span> </label>
+                                            <select formControlName="role" class="form-select form-control">
+                                                <option value="">select</option>
+                                                <option value="seller">seller</option>
+                                                <option value="buyer">buyer</option>
+                                                <option value="admin">admin</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="mb-1">
+                                            <div class="form-group">
+                                                <label>select gender<span class="text-danger">*</span> </label>
+                                                <div class="d-flex gap-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" value="male"
+                                                            formControlName="gender">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            male
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" value="female"
+                                                            formControlName="gender">
+                                                        <label class="form-check-label">
+                                                            female
+                                                        </label>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="mb-1">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" value="female"
-                                                    formControlName="gender">
+                                                <input class="form-check-input" type="checkbox"
+                                                    formControlName="agreetc">
                                                 <label class="form-check-label">
-                                                    female
+                                                    terms and conditons<span class="text-danger">*</span>
                                                 </label>
                                             </div>
                                         </div>
-
-                                    </div>
-                                    <div class="form-group">
-                                        <label>something about you </label>
-                                        <textarea class="form-control" formControlName="aboutyou"></textarea>
-                                    </div>
-                                    <div class="form-group ">
-                                        <label>upload your photo </label>
-                                        <input type="file" class="form-control" formControlName="photo"
-                                            placeholder="delhi">
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                formControlName="agreetc">
-                                            <label class="form-check-label">
-                                                terms and conditons
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group  ">
-                                        <label>what do you want ? </label>
-                                        <select formControlName="role" class="form-select">
-                                            <option value="">Select</option>
-                                            <option value="admin">Admin</option>
-                                            <option value="seller">Seller</option>
-                                            <option value="buyer">Buyer</option>
-                                        </select>
                                     </div>
                                 </div>
-                                <!-- <div class="mt-2 text-end">
-                                    <button type="submit" class="btn btn-primary" (click)="addUser()"
-                                        *ngIf="add_user">Submit</button>
-                                    <button type="submit" class="btn btn-primary" (click)="updateUser()"
-                                        *ngIf="edit_user">Update</button>
-                                </div> -->
                             </form>
                         </div>
                     </div>
@@ -165,8 +202,10 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <div class=" btn-div">
-                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
-                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" *ngIf="addEditbtn"
+                        (click)="save()" [disabled]="!userRegForm.valid">Submit</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" *ngIf="!addEditbtn"
+                        (click)="update()" [disabled]="!userRegForm.valid">Update</button>
                 </div>
             </div>
         </div>

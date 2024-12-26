@@ -1,0 +1,28 @@
+<br>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a>cart</a></li>
+        <li class="breadcrumb-item"><a routerLink="/buyer-dashboard">proudcts</a></li>
+    </ol>
+</nav>
+<div class="row mb-4" *ngIf="cartData">
+    <div class="col-sm-2 product" *ngFor="let item of cartData let i=index;">
+        <div class="card mt-1 shadow">
+            <img src="{{item.productUrl}}" alt="" class="img
+            ">
+            <div class="card-body">
+                <h4 class="card-title"> </h4>
+                <p><span class="float-left"><strong>MRP</strong>: <del>{{item.price}}</del> </span> &nbsp;
+                    <span class="float-left"><strong>DP</strong>:{{item.discountPrice}} </span>
+                </p>
+                <span>Qty: <strong>1</strong></span>
+                <button class="btn btn-warning float-end mb-2" (click)="buyNow(item._id)">Buy Now</button>
+                <button class="btn btn-danger float-end" (click)="remove(item._id)">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="cartData.length==0" class="text-center">
+    <h4>No Items Add</h4>
+</div>
