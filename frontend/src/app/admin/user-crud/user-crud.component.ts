@@ -158,10 +158,9 @@ export class UserCrudComponent {
     }, error => { alert(error.error.message) })
   }
 
-  deleteUser(Id: any, addId: any) {
+  deleteUser(Id: any) {
     const data = {
       userId: Id,
-      addressId: addId
     }
     this.apiSevice.deleteUser(data).subscribe(data => {
       if (data) {

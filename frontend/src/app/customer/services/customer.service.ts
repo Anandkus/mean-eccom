@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CustomerService {
-private url = environment.apiUrl;
+  private url = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
   getAllProduct(): Observable<any> {
@@ -19,6 +19,12 @@ private url = environment.apiUrl;
   }
   getAddress(): Observable<any> {
     return this.http.get(this.url + "/buyer/add")
+  }
+  addNewAddress(data: any): Observable<any> {
+    return this.http.post(this.url + "/buyer/address/create/", data);
+  }
+  deleteAddress(id: any): Observable<any> {
+    return this.http.delete(this.url + "/buyer/address/delete/" + id)
   }
   orderPlace(orderData: any): Observable<any> {
     return this.http.post(this.url + "/order/place/", orderData)

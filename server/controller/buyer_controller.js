@@ -29,5 +29,29 @@ const getUserAndAddress = async (req, res) => {
         return res.status(500).send({ error: error.message });
     }
 }
+const addNewAddress = async (req, res) => {
+    const user = req.user;
+    const { address1, address2, city, state, zipcode, mobile } = req.body;
+    try {
+        const saveAddress = await addressModel.create({ address1, address2, city, state, zipcode, mobile });
+        user.address.push(saveAddress._id);
+        await user.save();
+        return res.status(200).send({ message: "add new address !" });
+    } catch (error) {
+        return res.status(500).send({ error: error.message });
+    }
+}
 
-module.exports = { getAllProduct, getUserAndAddress, getSingleProduct }
+const deleteAddress = async (req, res) => {
+    const addressId = req.params.id;
+    const user = req.user;
+    try {
+        const address = await addressModel.findByIdAndDelete(addressId);
+        user.address = user.address.filter(id => id.toString() !== addressId);
+        await user.save();
+        return res.status(200).send({ message: "deleted successfully " })
+    } catch (error) {
+        return res.status(500).send({ error: error.message });
+    }
+}
+module.exports = { getAllProduct, getUserAndAddress, getSingleProduct, addNewAddress, deleteAddress }

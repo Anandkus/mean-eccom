@@ -52,11 +52,20 @@ const userUpdateByAdmin = async (req, res) => {
     }
 }
 const deleteUser = async (req, res) => {
-    const { userId, addressId } = req.body;
+    const { userId } = req.body;
+    //console.log(userId)
     try {
         const user = await userModel.findByIdAndDelete(userId);
-        const address = await addressModel.findByIdAndDelete(addressId);
-        return res.status(201).send({ message: "deleted success !" })
+        if (user) {
+            const addressIds = user.address; // `address` is an array
+            if (Array.isArray(addressIds) && addressIds.length > 0) {
+                const deleteResult = await Promise.all(
+                    addressIds.map(id => addressModel.findByIdAndDelete(id))
+                )
+                return res.status(201).send({ message: "deleted user and address success !" })
+            }
+        }
+        return res.status(201).send({ message: "deleted user success !" })
     } catch (error) {
         return res.status(500).send({ error: error.message });
     }
